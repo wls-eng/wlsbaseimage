@@ -200,7 +200,7 @@
             "createOption": "FromImage",
             "diskSizeGB": 32,
             "vhd": {
-                "uri": "[concat(variables('storageContainerUri'), parameters('vmName'), '.vhd')]"
+                "uri": "[concat(variables('storageContainerUri'), parameters('vmName'), '-OS.vhd')]"
             }
           },
          "dataDisks": [
@@ -212,7 +212,7 @@
                     "uri": "[concat(variables('storageContainerUri'), parameters('vmName'), '-DD.vhd')]"
                 },
                 "caching": "None",
-                "diskSizeGB": 1024           }
+                "diskSizeGB": 900           }
         ]          
         },
         "networkProfile": {
