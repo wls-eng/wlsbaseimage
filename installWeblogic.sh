@@ -148,7 +148,7 @@ SOFTWARE_UPDATES_PROXY_USER=
 SOFTWARE_UPDATES_PROXY_PASSWORD=<SECURE VALUE>
 
 #The oracle home location. This can be an existing Oracle Home or a new Oracle Home
-ORACLE_HOME=[INSTALL_PATH]/Oracle/Middleware/Oracle_Home
+ORACLE_HOME=[INSTALL_PATH]/oracle/middleware/oracle_home
 
 #Set this variable value to the Installation Type selected. e.g. WebLogic Server, Coherence, Complete with Examples.
 INSTALL_TYPE=WebLogic Server
@@ -201,7 +201,7 @@ Response File Version=1.0.0.0.0
 SELECTED_DISTRIBUTION=WebLogic Server~[WLSVER]
 
 #The oracle home location. This can be an existing Oracle Home or a new Oracle Home
-ORACLE_HOME=[INSTALL_PATH]/Oracle/Middleware/Oracle_Home/
+ORACLE_HOME=[INSTALL_PATH]/oracle/middleware/oracle_home/
 
 EOF
 }
@@ -220,10 +220,10 @@ function installWLS()
 
     echo "Created files required for silent installation at $SILENT_FILES_DIR"
 
-    export UNINSTALL_SCRIPT=$INSTALL_PATH/Oracle/Middleware/Oracle_Home/oui/bin/deinstall.sh
+    export UNINSTALL_SCRIPT=$INSTALL_PATH/oracle/middleware/oracle_home/oui/bin/deinstall.sh
     if [ -f "$UNINSTALL_SCRIPT" ]
     then
-            currentVer=`. $INSTALL_PATH/Oracle/Middleware/Oracle_Home/wlserver/server/bin/setWLSEnv.sh 1>&2 ; java weblogic.version |head -2`
+            currentVer=`. $INSTALL_PATH/oracle/middleware/oracle_home/wlserver/server/bin/setWLSEnv.sh 1>&2 ; java weblogic.version |head -2`
             echo "#########################################################################################################"
             echo "Uninstalling already installed version :"$currentVer
             runuser -l oracle -c "$UNINSTALL_SCRIPT -silent -responseFile ${SILENT_FILES_DIR}/uninstall-response"
@@ -300,6 +300,7 @@ sudo useradd -d ${user_home_dir} -g $groupname $username
 
 JDK_PATH="/u01/app/jdk"
 WLS_PATH="/u01/app/wls"
+WL_HOME="/u01/app/wls/install/oracle/middleware/oracle_home/wlserver"
 
 #create custom directory for setting up wls and jdk
 sudo mkdir -p $JDK_PATH
