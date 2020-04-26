@@ -45,6 +45,59 @@ function cleanup()
     echo "Cleanup completed."
 }
 
+#download 3rd Party JDBC Drivers
+function downloadJDBCDrivers()
+{
+   echo "Downloading JDBC Drivers..."
+
+   echo "Downloading postgresql Driver..."
+   downloadUsingWget ${POSTGRESQL_JDBC_DRIVER_URL}
+
+   echo "Downloading mssql Driver"
+   downloadUsingWget ${MSSQL_JDBC_DRIVER_URL}
+
+   echo "JDBC Drivers Downloaded Completed Successfully."
+}
+
+function downloadUsingWget()
+{
+   downloadURL=$1
+   filename=${downloadURL##*/}
+   for in in {1..5}
+   do
+     wget $downloadURL
+     if [ $? != 0 ];
+     then
+        echo "$filename Driver Download failed on $downloadURL. Trying again..."
+	rm -f $filename
+     else 
+        echo "$filename Driver Downloaded successfully"
+        break
+     fi
+   done
+}
+
+function copyJDBCDriversToWeblogicClassPath()
+{
+     echo "Copying JDBC Drivers to Weblogic CLASSPATH ..."
+     sudo cp $BASE_DIR/${POSTGRESQL_JDBC_DRIVER} ${WL_HOME}/server/lib/
+     sudo cp $BASE_DIR/${MSSQL_JDBC_DRIVER} ${WL_HOME}/server/lib/
+
+     chown $username:$groupname ${WL_HOME}/server/lib/${POSTGRESQL_JDBC_DRIVER}
+     chown $username:$groupname ${WL_HOME}/server/lib/${MSSQL_JDBC_DRIVER}
+
+     echo "Copied JDBC Drivers to Weblogic CLASSPATH"
+}
+
+function modifyWLSClasspath()
+{
+  echo "Modify WLS CLASSPATH ...."
+  sed -i 's;^WEBLOGIC_CLASSPATH=\"${JAVA_HOME}.*;&\nWEBLOGIC_CLASSPATH="${WL_HOME}/server/lib/postgresql-42.2.8.jar:${WL_HOME}/server/lib/mssql-jdbc-7.4.1.jre8.jar:${WEBLOGIC_CLASSPATH}";' ${WL_HOME}/../oracle_common/common/bin/commExtEnv.sh
+  sed -i 's;^WEBLOGIC_CLASSPATH=\"${JAVA_HOME}.*;&\n\n#**WLSAZURECUSTOMSCRIPTEXTENSION** Including Postgresql and MSSSQL JDBC Drivers in Weblogic Classpath;' ${WL_HOME}/../oracle_common/common/bin/commExtEnv.sh
+  echo "Modified WLS CLASSPATH."
+}
+
+
 #Function to create Weblogic Installation Location Template File for Silent Installation
 function create_oraInstlocTemplate()
 {
@@ -311,6 +364,12 @@ create_oraResponseTemplate
 create_oraUninstallResponseTemplate
 
 installWLS
+
+downloadJDBCDrivers
+
+copyJDBCDriversToWeblogicClassPath
+
+modifyWLSClasspath
 
 cleanup
 
