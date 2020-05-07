@@ -12,21 +12,6 @@ function usage()
   echo_stderr "./installWeblogic.sh <acceptOTNLicenseAgreement> <otnusername> <otnpassword>"
 }
 
-function validateJDKZipCheckSum()
-{
-  jdkZipFile="$1"
-  jdk18u131Sha256Checksum="62b215bdfb48bace523723cdbb2157c665e6a25429c73828a32f00e587301236"
-
-  downloadedJDKZipCheckSum=$(sha256sum $jdkZipFile | cut -d ' ' -f 1)
-
-  if [ "${jdk18u131Sha256Checksum}" == "${downloadedJDKZipCheckSum}" ];
-  then
-    echo "Checksum match successful. Proceeding with Weblogic Install Kit Zip Download from OTN..."
-  else
-    echo "Checksum match failed. Please check the supplied OTN credentials and try again."
-    exit 1
-  fi
-}
 
 #Function to cleanup all temporary files
 function cleanup()
@@ -360,7 +345,7 @@ sudo rm -rf $WLS_PATH/silent-template/*
 sudo chown -R $username:$groupname $WLS_PATH
 
 export INSTALL_PATH="$WLS_PATH/install"
-export WLS_JAR="$WLS_PATH/fmw_12.2.1.3.0_wls.jar"
+export WLS_JAR="$WLS_PATH/fmw_14.1.1.0.0_wls.jar"
 
 mkdir -p $INSTALL_PATH
 sudo chown -R $username:$groupname $INSTALL_PATH
