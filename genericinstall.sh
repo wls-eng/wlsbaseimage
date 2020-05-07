@@ -33,11 +33,11 @@ function cleanup()
 {
     echo "Cleaning up temporary files..."
 
-    rm -f $BASE_DIR/jdk-8u131-linux-x64.tar.gz
-    rm -f $BASE_DIR/fmw_12.2.1.3.0_wls_Disk1_1of1.zip
+    rm -f $BASE_DIR/*.tar.gz
+    rm -f $BASE_DIR/*.zip
 
-    rm -rf $JDK_PATH/jdk-8u131-linux-x64.tar.gz
-    rm -rf $WLS_PATH/fmw_12.2.1.3.0_wls_Disk1_1of1.zip
+    rm -rf $JDK_PATH/*.tar.gz
+    rm -rf $WLS_PATH/*.zip
 
     rm -rf $WLS_PATH/silent-template
 
@@ -281,8 +281,8 @@ then
         echo_stderr "otnusername or otnpassword is required. "
         exit 1
 fi
-
-export WLS_VER="12.2.1.3.0"
+# TODO - Remove hardcoded WLS_VERSION
+export WLS_VER="14.1.1.0.0"
 export POSTGRESQL_JDBC_DRIVER_URL=https://jdbc.postgresql.org/download/postgresql-42.2.8.jar 
 export POSTGRESQL_JDBC_DRIVER=${POSTGRESQL_JDBC_DRIVER_URL##*/}
 
@@ -314,7 +314,7 @@ cleanup
 echo "Downloading jdk from OTN..."
 curl -s https://raw.githubusercontent.com/typekpb/oradown/master/oradown.sh  | bash -s -- --cookie=accept-weblogicserver-server --username="${otnusername}" --password="${otnpassword}" https://download.oracle.com/otn/java/jdk/8u131-b11/d54c1d3a095b4ff2b6607d096fa80163/jdk-8u131-linux-x64.tar.gz
 
-validateJDKZipCheckSum $BASE_DIR/jdk-8u131-linux-x64.tar.gz
+#validateJDKZipCheckSum $BASE_DIR/jdk-8u131-linux-x64.tar.gz
 
 #Download Weblogic install jar from OTN
 echo "Downloading weblogic install kit from OTN..."
@@ -322,11 +322,11 @@ curl -s https://raw.githubusercontent.com/typekpb/oradown/master/oradown.sh  | b
 
 sudo chown -R $username:$groupname /u01/app
 
-sudo cp $BASE_DIR/fmw_12.2.1.3.0_wls_Disk1_1of1.zip $WLS_PATH/fmw_12.2.1.3.0_wls_Disk1_1of1.zip
-sudo cp $BASE_DIR/jdk-8u131-linux-x64.tar.gz $JDK_PATH/jdk-8u131-linux-x64.tar.gz
+sudo cp $BASE_DIR/fmw_*.zip $WLS_PATH/
+sudo cp $BASE_DIR/jdk-*.tar.gz $JDK_PATH/
 
 echo "extracting and setting up jdk..."
-sudo tar -zxvf $JDK_PATH/jdk-8u131-linux-x64.tar.gz --directory $JDK_PATH
+sudo tar -zxvf $JDK_PATH/jdk-*.tar.gz --directory $JDK_PATH
 sudo chown -R $username:$groupname $JDK_PATH
 
 export JAVA_HOME=$JDK_PATH/jdk1.8.0_131
@@ -352,7 +352,7 @@ sudo systemctl start rngd
 sudo systemctl status rngd
 
 echo "unzipping fmw_12.2.1.3.0_wls_Disk1_1of1.zip..."
-sudo unzip -o $WLS_PATH/fmw_12.2.1.3.0_wls_Disk1_1of1.zip -d $WLS_PATH
+sudo unzip -o $WLS_PATH/fmw_*.zip -d $WLS_PATH
 
 export SILENT_FILES_DIR=$WLS_PATH/silent-template
 sudo mkdir -p $SILENT_FILES_DIR
