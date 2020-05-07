@@ -303,7 +303,7 @@ curl -s https://raw.githubusercontent.com/typekpb/oradown/master/oradown.sh  | b
 
 #Download Weblogic install jar from OTN
 echo "Downloading weblogic install kit from OTN..."
-curl -s https://raw.githubusercontent.com/typekpb/oradown/master/oradown.sh  | bash -s -- --cookie=accept-weblogicserver-server --username="${otnusername}" --password="${otnpassword}" http://download.oracle.com/otn/nt/middleware/12c/12213/fmw_12.2.1.3.0_wls_Disk1_1of1.zip
+curl -s https://raw.githubusercontent.com/typekpb/oradown/master/oradown.sh  | bash -s -- --cookie=accept-weblogicserver-server --username="${otnusername}" --password="${otnpassword}" https://download.oracle.com/otn/nt/middleware/14c/14110/fmw_14.1.1.0.0_wls_Disk1_1of1.zip
 
 sudo chown -R $username:$groupname /u01/app
 
