@@ -3,13 +3,13 @@
 #Function to output message to StdErr
 function echo_stderr ()
 {
-    echo "$@" >&2
+    echo "$@" >&6
 }
 
 #Function to display usage message
 function usage()
 {
-  echo_stderr "./installWeblogic.sh <acceptOTNLicenseAgreement> <otnusername> <otnpassword>"
+  echo_stderr "./installWeblogic.sh <acceptOTNLicenseAgreement> <otnusername> <otnpassword> <shiphomeurl> <jdkurl> <wlsversion> <jdkversion>"
 }
 
 
@@ -239,7 +239,7 @@ function installWLS()
 CURR_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 export BASE_DIR="$(readlink -f ${CURR_DIR})"
 
-if [ $# -ne 3 ]
+if [ $# -ne 5 ]
 then
     usage
     exit 1
@@ -248,6 +248,10 @@ fi
 export acceptOTNLicenseAgreement="$1"
 export otnusername="$2"
 export otnpassword="$3"
+export shiphomeurl="$4"
+export jdkurl="$5"
+export wlsversion="$6"
+export jdkversion="$7"
 
 if [ -z "$acceptOTNLicenseAgreement" ];
 then
@@ -266,8 +270,8 @@ then
         echo_stderr "otnusername or otnpassword is required. "
         exit 1
 fi
-# TODO - Remove hardcoded WLS_VERSION
-export WLS_VER="14.1.1.0.0"
+
+export WLS_VER=$wlsversion
 export POSTGRESQL_JDBC_DRIVER_URL=https://jdbc.postgresql.org/download/postgresql-42.2.8.jar 
 export POSTGRESQL_JDBC_DRIVER=${POSTGRESQL_JDBC_DRIVER_URL##*/}
 
@@ -297,13 +301,13 @@ cleanup
 
 #download jdk from OTN
 echo "Downloading jdk from OTN..."
-curl -s https://raw.githubusercontent.com/typekpb/oradown/master/oradown.sh  | bash -s -- --cookie=accept-weblogicserver-server --username="${otnusername}" --password="${otnpassword}" https://download.oracle.com/otn/java/jdk/8u131-b11/d54c1d3a095b4ff2b6607d096fa80163/jdk-8u131-linux-x64.tar.gz
+curl -s https://raw.githubusercontent.com/typekpb/oradown/master/oradown.sh  | bash -s -- --cookie=accept-weblogicserver-server --username="${otnusername}" --password="${otnpassword}" $jdkurl
 
 #validateJDKZipCheckSum $BASE_DIR/jdk-8u131-linux-x64.tar.gz
 
 #Download Weblogic install jar from OTN
 echo "Downloading weblogic install kit from OTN..."
-curl -s https://raw.githubusercontent.com/typekpb/oradown/master/oradown.sh  | bash -s -- --cookie=accept-weblogicserver-server --username="${otnusername}" --password="${otnpassword}" https://download.oracle.com/otn/nt/middleware/14c/14110/fmw_14.1.1.0.0_wls_Disk1_1of1.zip
+curl -s https://raw.githubusercontent.com/typekpb/oradown/master/oradown.sh  | bash -s -- --cookie=accept-weblogicserver-server --username="${otnusername}" --password="${otnpassword}" $shiphomeurl
 
 sudo chown -R $username:$groupname /u01/app
 
@@ -314,7 +318,7 @@ echo "extracting and setting up jdk..."
 sudo tar -zxvf $JDK_PATH/jdk-*.tar.gz --directory $JDK_PATH
 sudo chown -R $username:$groupname $JDK_PATH
 
-export JAVA_HOME=$JDK_PATH/jdk1.8.0_131
+export JAVA_HOME=$JDK_PATH/$jdkversion
 export PATH=$JAVA_HOME/bin:$PATH
 
 java -version
@@ -336,7 +340,7 @@ sudo systemctl status rngd
 sudo systemctl start rngd
 sudo systemctl status rngd
 
-echo "unzipping fmw_12.2.1.3.0_wls_Disk1_1of1.zip..."
+echo "unzipping wls install archive..."
 sudo unzip -o $WLS_PATH/fmw_*.zip -d $WLS_PATH
 
 export SILENT_FILES_DIR=$WLS_PATH/silent-template
@@ -345,7 +349,7 @@ sudo rm -rf $WLS_PATH/silent-template/*
 sudo chown -R $username:$groupname $WLS_PATH
 
 export INSTALL_PATH="$WLS_PATH/install"
-export WLS_JAR="$WLS_PATH/fmw_14.1.1.0.0_wls.jar"
+export WLS_JAR="$WLS_PATH/fmw_$wlsversion_wls.jar"
 
 mkdir -p $INSTALL_PATH
 sudo chown -R $username:$groupname $INSTALL_PATH
