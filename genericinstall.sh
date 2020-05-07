@@ -349,7 +349,7 @@ sudo rm -rf $WLS_PATH/silent-template/*
 sudo chown -R $username:$groupname $WLS_PATH
 
 export INSTALL_PATH="$WLS_PATH/install"
-export WLS_JAR="$WLS_PATH/fmw_$wlsversion_wls.jar"
+export WLS_JAR=$WLS_PATH"/fmw_"$wlsversion"_wls.jar"
 
 mkdir -p $INSTALL_PATH
 sudo chown -R $username:$groupname $INSTALL_PATH
