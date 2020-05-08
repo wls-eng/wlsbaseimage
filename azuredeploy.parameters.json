@@ -5,11 +5,29 @@
     "adminUsername": {
       "value": "adminuser"
     },
-    "vmName": {
-      "value": "BaseImageVM"
-    },
     "adminPasswordOrKey": {
-      "value": "@SYSTEMGumby1234"
+      "value": "REDACTED"
+    },
+    "acceptOTNLicenseAgreement": {
+      "value": "Y"
+    },
+    "otnAccountUsername": {
+      "value": "REDACTED"
+    },
+    "otnAccountPassword": {
+      "value": "REDACTED"
+    },
+    "shiphomeurl": {
+      "value": "https://download.oracle.com/otn/nt/middleware/14c/14110/fmw_14.1.1.0.0_wls_Disk1_1of1.zip"
+    },
+    "jdkurl": {
+      "value": "https://download.oracle.com/otn/java/jdk/8u251-b08/3d5a2bb8f8d4428bbe94aed7ec7ae784/jdk-8u251-linux-x64.tar.gz"
+    },
+    "wlsversion": {
+      "value": "14.1.1.0.0"
+    },
+    "jdkversion": {
+      "value": "jdk1.8.0_251"
     }
   }
 }
