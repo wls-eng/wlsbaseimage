@@ -217,8 +217,8 @@ function installWLS()
     fi
 
     echo "---------------- Installing WLS ${WLS_JAR} ----------------"
-    echo $JAVA_HOME/bin/java  -jar  ${WLS_JAR} -silent -invPtrLoc ${SILENT_FILES_DIR}/oraInst.loc -responseFile ${SILENT_FILES_DIR}/response -novalidation
-    runuser -l oracle -c "$JAVA_HOME/bin/java -jar  ${WLS_JAR} -silent -invPtrLoc ${SILENT_FILES_DIR}/oraInst.loc -responseFile ${SILENT_FILES_DIR}/response -novalidation"
+    echo $JAVA_HOME/bin/java -d64  -jar  ${WLS_JAR} -silent -invPtrLoc ${SILENT_FILES_DIR}/oraInst.loc -responseFile ${SILENT_FILES_DIR}/response -novalidation
+    runuser -l oracle -c "$JAVA_HOME/bin/java -d64  -jar  ${WLS_JAR} -silent -invPtrLoc ${SILENT_FILES_DIR}/oraInst.loc -responseFile ${SILENT_FILES_DIR}/response -novalidation"
 
     # Check for successful installation and version requested
     if [[ $? == 0 ]];
@@ -372,3 +372,18 @@ modifyWLSClasspath
 cleanup
 
 echo "Weblogic Server Installation Completed succesfully."
+
+echo "==================================== Validating OS, JDK and WLS versions =================================================="
+echo " \n\n\n\n\n\n "
+echo " Java Version "
+sudo java -version
+echo " \n\n\n\n\n\n "
+echo " WLS  Version "
+
+sudo java -cp /u01/app/wls/install/oracle/middleware/oracle_home/wlserver/server/lib/weblogic.jar weblogic.version
+echo " \n\n\n\n\n\n "
+echo " OS details "
+sudo hostnamectl
+
+
+echo "==================================== Validating OS, JDK and WLS versions =================================================="
