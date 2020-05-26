@@ -321,6 +321,9 @@ sudo chown -R $username:$groupname $JDK_PATH
 export JAVA_HOME=$JDK_PATH/$jdkversion
 export PATH=$JAVA_HOME/bin:$PATH
 
+echo "JAVA_HOME set to $JAVA_HOME"
+echo "PATH set to $PATH"
+
 java -version
 
 if [ $? == 0 ];
