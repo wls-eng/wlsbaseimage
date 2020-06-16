@@ -315,8 +315,7 @@ echo "Downloading weblogic install kit from OTN..."
 curl -s https://raw.githubusercontent.com/typekpb/oradown/master/oradown.sh  | bash -s -- --cookie=accept-weblogicserver-server --username="${otnusername}" --password="${otnpassword}" $shiphomeurl
 
 #download Weblogic deploy tool 
-cd $WDT_PATH
-wget -q $WEBLOGIC_DEPLOY_TOOL
+wget -P $WDT_PATH $WEBLOGIC_DEPLOY_TOOL
 
 
 sudo chown -R $username:$groupname /u01/app
