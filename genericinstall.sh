@@ -303,8 +303,6 @@ sudo rm -rf $WLS_PATH/*
 
 cleanup
 
-#download Weblogic deploy tool 
-wget -P $WDT_PATH -q $WEBLOGIC_DEPLOY_TOOL
 
 #download jdk from OTN
 echo "Downloading jdk from OTN..."
@@ -315,6 +313,11 @@ curl -s https://raw.githubusercontent.com/typekpb/oradown/master/oradown.sh  | b
 #Download Weblogic install jar from OTN
 echo "Downloading weblogic install kit from OTN..."
 curl -s https://raw.githubusercontent.com/typekpb/oradown/master/oradown.sh  | bash -s -- --cookie=accept-weblogicserver-server --username="${otnusername}" --password="${otnpassword}" $shiphomeurl
+
+#download Weblogic deploy tool 
+cd $WDT_PATH
+wget -q $WEBLOGIC_DEPLOY_TOOL
+
 
 sudo chown -R $username:$groupname /u01/app
 
