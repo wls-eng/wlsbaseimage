@@ -311,7 +311,7 @@ sudo useradd -d ${user_home_dir} -g $groupname $username
 
 
 
-
+DOMAIN_PATH="/u01/domains"
 JDK_PATH="/u01/app/jdk"
 WLS_PATH="/u01/app/wls"
 WL_HOME="/u01/app/wls/install/oracle/middleware/oracle_home/wlserver"
@@ -320,6 +320,7 @@ WL_HOME="/u01/app/wls/install/oracle/middleware/oracle_home/wlserver"
 #create custom directory for setting up wls and jdk
 sudo mkdir -p $JDK_PATH
 sudo mkdir -p $WLS_PATH
+sudo mkdir -p $DOMAIN_PATH
 sudo rm -rf $JDK_PATH/*
 sudo rm -rf $WLS_PATH/*
 
@@ -337,12 +338,15 @@ echo "Downloading weblogic install kit from OTN..."
 curl -s https://raw.githubusercontent.com/typekpb/oradown/master/oradown.sh  | bash -s -- --cookie=accept-weblogicserver-server --username="${otnusername}" --password="${otnpassword}" $shiphomeurl
 
 #download Weblogic deploy tool 
-downloadWebLogicDeployTool
+#downloadWebLogicDeployTool
+curl -s https://github.com/oracle/weblogic-deploy-tooling/releases/download/weblogic-deploy-tooling-1.8.1/weblogic-deploy.zip
 
 sudo chown -R $username:$groupname /u01/app
+sudo chown -R $username:$groupname /u01/domains
 
 sudo cp $BASE_DIR/fmw_*.zip $WLS_PATH/
 sudo cp $BASE_DIR/jdk-*.tar.gz $JDK_PATH/
+sudo cp $BASE_DIR/weblogic-deploy.zip $DOMAIN_PATH/
 
 echo "extracting and setting up jdk..."
 sudo tar -zxvf $JDK_PATH/jdk-*.tar.gz --directory $JDK_PATH
