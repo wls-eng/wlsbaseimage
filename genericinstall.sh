@@ -44,6 +44,27 @@ function downloadJDBCDrivers()
    echo "JDBC Drivers Downloaded Completed Successfully."
 }
 
+
+
+function downloadWebLogicDeployTool()
+{
+ 
+    echo "Creating domain path /u01/domains"
+    echo "Downloading weblogic-deploy-tool"
+    DOMAIN_PATH="/u01/domains" 
+    sudo mkdir -p $DOMAIN_PATH 
+    sudo rm -rf $DOMAIN_PATH/*
+
+    cd $DOMAIN_PATH
+    wget -q $WEBLOGIC_DEPLOY_TOOL
+    if [[ $? != 0 ]]; then
+       echo "Error : Downloading weblogic-deploy-tool failed"
+       exit 1
+    fi
+    sudo unzip -o weblogic-deploy.zip -d $DOMAIN_PATH
+}
+
+
 function downloadUsingWget()
 {
    downloadURL=$1
@@ -272,6 +293,7 @@ then
 fi
 
 export WLS_VER=$wlsversion
+export WEBLOGIC_DEPLOY_TOOL=https://github.com/oracle/weblogic-deploy-tooling/releases/download/weblogic-deploy-tooling-1.8.1/weblogic-deploy.zip
 export POSTGRESQL_JDBC_DRIVER_URL=https://jdbc.postgresql.org/download/postgresql-42.2.8.jar 
 export POSTGRESQL_JDBC_DRIVER=${POSTGRESQL_JDBC_DRIVER_URL##*/}
 
@@ -287,14 +309,14 @@ USER_GROUP=${groupname}
 sudo groupadd $groupname
 sudo useradd -d ${user_home_dir} -g $groupname $username
 
-WEBLOGIC_DEPLOY_TOOL=https://github.com/oracle/weblogic-deploy-tooling/releases/download/weblogic-deploy-tooling-1.8.1/weblogic-deploy.zip
-WDT_PATH="/u01/app/wdt"
+
+
+
 JDK_PATH="/u01/app/jdk"
 WLS_PATH="/u01/app/wls"
 WL_HOME="/u01/app/wls/install/oracle/middleware/oracle_home/wlserver"
 
-#create directory to download weblogic deploy tool
-sudo mkdir -p $WDT_PATH
+
 #create custom directory for setting up wls and jdk
 sudo mkdir -p $JDK_PATH
 sudo mkdir -p $WLS_PATH
@@ -315,8 +337,7 @@ echo "Downloading weblogic install kit from OTN..."
 curl -s https://raw.githubusercontent.com/typekpb/oradown/master/oradown.sh  | bash -s -- --cookie=accept-weblogicserver-server --username="${otnusername}" --password="${otnpassword}" $shiphomeurl
 
 #download Weblogic deploy tool 
-wget -P $WDT_PATH $WEBLOGIC_DEPLOY_TOOL
-
+downloadWebLogicDeployTool
 
 sudo chown -R $username:$groupname /u01/app
 
