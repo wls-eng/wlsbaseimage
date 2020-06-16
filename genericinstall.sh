@@ -287,10 +287,14 @@ USER_GROUP=${groupname}
 sudo groupadd $groupname
 sudo useradd -d ${user_home_dir} -g $groupname $username
 
+WEBLOGIC_DEPLOY_TOOL=https://github.com/oracle/weblogic-deploy-tooling/releases/download/weblogic-deploy-tooling-1.8.1/weblogic-deploy.zip
+WDT_PATH="/u01/app/wdt"
 JDK_PATH="/u01/app/jdk"
 WLS_PATH="/u01/app/wls"
 WL_HOME="/u01/app/wls/install/oracle/middleware/oracle_home/wlserver"
 
+#create directory to download weblogic deploy tool
+sudo mkdir -p $WDT_PATH
 #create custom directory for setting up wls and jdk
 sudo mkdir -p $JDK_PATH
 sudo mkdir -p $WLS_PATH
@@ -298,6 +302,9 @@ sudo rm -rf $JDK_PATH/*
 sudo rm -rf $WLS_PATH/*
 
 cleanup
+
+#download Weblogic deploy tool 
+wget -P $WDT_PATH -q $WEBLOGIC_DEPLOY_TOOL
 
 #download jdk from OTN
 echo "Downloading jdk from OTN..."
