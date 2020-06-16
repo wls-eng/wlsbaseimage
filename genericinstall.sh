@@ -53,7 +53,7 @@ function downloadWebLogicDeployTool()
     echo "Downloading weblogic-deploy-tool"
     DOMAIN_PATH="/u01/domains" 
     sudo mkdir -p $DOMAIN_PATH 
-    sudo rm -rf $DOMAIN_PATH/*
+    
 
     cd $DOMAIN_PATH
     wget -q $WEBLOGIC_DEPLOY_TOOL
@@ -339,7 +339,7 @@ curl -s https://raw.githubusercontent.com/typekpb/oradown/master/oradown.sh  | b
 
 #download Weblogic deploy tool 
 echo "Downloading WDT from github to "$BASE_DIR
-wget https://github.com/oracle/weblogic-deploy-tooling/releases/download/weblogic-deploy-tooling-1.8.1/weblogic-deploy.zip
+wget https://wlsbaseimagevhdstorage.blob.core.windows.net/deploytool/weblogic-deploy.zip?st=2020-06-12T22%3A50%3A00Z&se=2021-06-30T22%3A50%3A00Z&sp=rl&sv=2018-03-28&sr=c&sig=5Pq4fX%2F9oEr0CDhIzgH73%2FjIi3eI5FR17MVUSTOKnPs%3D
 
 sudo chown -R $username:$groupname /u01/app
 sudo chown -R $username:$groupname /u01/domains
