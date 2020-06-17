@@ -46,14 +46,14 @@ function downloadJDBCDrivers()
 
 
 
-function downloadWebLogicDeployTool()
+function setupWDT()
 {
- 
+    echo "Creating Admin Setup"
     echo "Creating domain path /u01/domains"
     echo "Downloading weblogic-deploy-tool"
     DOMAIN_PATH="/u01/domains" 
     sudo mkdir -p $DOMAIN_PATH 
-    
+    sudo rm -rf $DOMAIN_PATH/*
 
     cd $DOMAIN_PATH
     wget -q $WEBLOGIC_DEPLOY_TOOL
@@ -62,6 +62,7 @@ function downloadWebLogicDeployTool()
        exit 1
     fi
     sudo unzip -o weblogic-deploy.zip -d $DOMAIN_PATH
+
 }
 
 
@@ -311,7 +312,7 @@ sudo useradd -d ${user_home_dir} -g $groupname $username
 
 
 
-DOMAIN_PATH="/u01/domains"
+
 JDK_PATH="/u01/app/jdk"
 WLS_PATH="/u01/app/wls"
 WL_HOME="/u01/app/wls/install/oracle/middleware/oracle_home/wlserver"
@@ -320,7 +321,6 @@ WL_HOME="/u01/app/wls/install/oracle/middleware/oracle_home/wlserver"
 #create custom directory for setting up wls and jdk
 sudo mkdir -p $JDK_PATH
 sudo mkdir -p $WLS_PATH
-sudo mkdir -p $DOMAIN_PATH
 sudo rm -rf $JDK_PATH/*
 sudo rm -rf $WLS_PATH/*
 
@@ -338,15 +338,12 @@ echo "Downloading weblogic install kit from OTN..."
 curl -s https://raw.githubusercontent.com/typekpb/oradown/master/oradown.sh  | bash -s -- --cookie=accept-weblogicserver-server --username="${otnusername}" --password="${otnpassword}" $shiphomeurl
 
 #download Weblogic deploy tool 
-echo "Downloading WDT from github to "$BASE_DIR
-wget https://wlsbaseimagevhdstorage.blob.core.windows.net/deploytool/weblogic-deploy.zip?st=2020-06-12T22%3A50%3A00Z&se=2021-06-30T22%3A50%3A00Z&sp=rl&sv=2018-03-28&sr=c&sig=5Pq4fX%2F9oEr0CDhIzgH73%2FjIi3eI5FR17MVUSTOKnPs%3D
 
 sudo chown -R $username:$groupname /u01/app
-sudo chown -R $username:$groupname /u01/domains
+
 
 sudo cp $BASE_DIR/fmw_*.zip $WLS_PATH/
 sudo cp $BASE_DIR/jdk-*.tar.gz $JDK_PATH/
-sudo cp $BASE_DIR/weblogic-deploy.zip $DOMAIN_PATH/
 
 echo "extracting and setting up jdk..."
 sudo tar -zxvf $JDK_PATH/jdk-*.tar.gz --directory $JDK_PATH
@@ -396,6 +393,8 @@ create_oraResponseTemplate
 create_oraUninstallResponseTemplate
 
 installWLS
+
+setupWDT
 
 downloadJDBCDrivers
 
