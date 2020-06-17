@@ -62,6 +62,8 @@ function setupWDT()
        exit 1
     fi
     sudo unzip -o weblogic-deploy.zip -d $DOMAIN_PATH
+    sudo chown -R $username:$groupname $DOMAIN_PATH
+    rm $DOMAIN_PATH/weblogic-deploy.zip
     cd $DIR_PWD
 
 }
