@@ -48,7 +48,7 @@ function downloadJDBCDrivers()
 
 function setupWDT()
 {
-    echo "Creating Admin Setup"
+    DIR_PWD="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
     echo "Creating domain path /u01/domains"
     echo "Downloading weblogic-deploy-tool"
     DOMAIN_PATH="/u01/domains" 
@@ -62,6 +62,7 @@ function setupWDT()
        exit 1
     fi
     sudo unzip -o weblogic-deploy.zip -d $DOMAIN_PATH
+    cd $DIR_PWD
 
 }
 
