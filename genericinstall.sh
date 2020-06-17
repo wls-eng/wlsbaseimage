@@ -243,7 +243,7 @@ function installWLS()
 
     echo "---------------- Installing WLS ${WLS_JAR} ----------------"
     echo $JAVA_HOME/bin/java -d64  -jar  ${WLS_JAR} -silent -invPtrLoc ${SILENT_FILES_DIR}/oraInst.loc -responseFile ${SILENT_FILES_DIR}/response -novalidation
-    runuser -l oracle -c "$JAVA_HOME/bin/java -d64  -jar  ${WLS_JAR} -silent -invPtrLoc ${SILENT_FILES_DIR}/oraInst.loc -responseFile ${SILENT_FILES_DIR}/response -novalidation"
+    runuser -l oracle -c "$JAVA_HOME/bin/java  -jar  ${WLS_JAR} -silent -invPtrLoc ${SILENT_FILES_DIR}/oraInst.loc -responseFile ${SILENT_FILES_DIR}/response -novalidation"
 
     # Check for successful installation and version requested
     if [[ $? == 0 ]];
