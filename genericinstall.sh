@@ -380,8 +380,8 @@ else
     exit 1
 fi
 
-echo "Installing zip unzip wget vnc-server rng-tools "
-sudo yum install -y zip unzip wget vnc-server rng-tools
+echo "Installing zip unzip wget vnc-server rng-tools cifs-utils"
+sudo yum install -y zip unzip wget vnc-server rng-tools cifs-utils
 
 #Setting up rngd utils
 sudo systemctl enable rngd 
