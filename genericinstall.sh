@@ -421,17 +421,7 @@ cleanup
 
 echo "Weblogic Server Installation Completed succesfully."
 
-echo "==================================== Validating OS, JDK and WLS versions =================================================="
-echo " \n\n\n\n\n\n "
-echo " Java Version "
-sudo java -version
-echo " \n\n\n\n\n\n "
-echo " WLS  Version "
+sudo yum upgrade -y --disablerepo=ol7_latest --enablerepo=ol7_u3_base
 
-sudo java -cp /u01/app/wls/install/oracle/middleware/oracle_home/wlserver/server/lib/weblogic.jar weblogic.version
-echo " \n\n\n\n\n\n "
-echo " OS details "
-sudo hostnamectl
+sudo reboot
 
-
-echo "==================================== Validating OS, JDK and WLS versions =================================================="
