@@ -425,3 +425,5 @@ sudo yum upgrade -y --disablerepo=ol7_latest --enablerepo=ol7_u3_base
 
 sudo reboot
 
+echo "Update and reboot complete. Now deprovisioning the VM"
+sudo waagent -deprovision+user -force
