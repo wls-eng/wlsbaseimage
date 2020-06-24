@@ -421,7 +421,7 @@ cleanup
 
 echo "Weblogic Server Installation Completed succesfully."
 
-sudo yum upgrade -y --disablerepo=ol7_latest --enablerepo=ol7_u3_base
+#sudo yum upgrade -y --disablerepo=ol7_latest --enablerepo=ol7_u3_base
 
-sudo reboot
+#sudo reboot
 
