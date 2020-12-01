@@ -432,7 +432,7 @@ echo "Weblogic Server Installation Completed succesfully."
 
 opatch_patch="https://weblogiconazurepatches.blob.core.windows.net/opatch/p28186730_139424_Generic.zip?st=2020-11-22T17%3A21%3A00Z&se=2023-02-01T17%3A21%3A00Z&sp=rl&sv=2018-03-28&sr=c&sig=zyRJSbKSxl5R4IJIVxhzT8mMk8jscV%2FWaI20QLn7wQY%3D"
 
-downloadpatch \"$opatch_patch\" "opatch.zip"
+downloadpatch $opatch_patch  "opatch.zip"
 #sudo yum upgrade -y --disablerepo=ol7_latest --enablerepo=ol7_u3_base
 
 #sudo reboot
