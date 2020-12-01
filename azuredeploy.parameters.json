@@ -6,16 +6,16 @@
       "value": "adminuser"
     },
     "adminPasswordOrKey": {
-      "value": "@SYSTEMGumby1234"
+      "value": "REDACTED"
     },
     "acceptOTNLicenseAgreement": {
       "value": "Y"
     },
     "otnAccountUsername": {
-      "value": "jacobt_412@outlook.com"
+      "value": "REDACTED"
     },
     "otnAccountPassword": {
-      "value": "Gumby1234"
+      "value": "REDACTED"
     },
     "shiphomeurl": {
       "value": "http://download.oracle.com/otn/nt/middleware/12c/12213/fmw_12.2.1.3.0_wls_Disk1_1of1.zip"
