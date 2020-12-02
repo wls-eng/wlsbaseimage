@@ -274,6 +274,7 @@ function downloadpatch()
 {
     echo "Download patch from storage account"
     curl $1 --output $PATCH_DIR/$2
+    sudo chown -R $username:$groupname $PATCH_DIR
 
 }
 
@@ -281,6 +282,7 @@ function unzippatch()
 {
     echo "Unzip patch "$1
     patcharchive=$(unzip $1 -d /u01/app/patch| grep -m1 'creating:' | cut -d'/' -f5)
+    sudo chown -R $username:$groupname $PATCH_DIR
 
 }
 
