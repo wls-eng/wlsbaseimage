@@ -441,15 +441,29 @@ cleanup
 echo "Weblogic Server Installation Completed succesfully."
 
 opatch_patch="https://weblogiconazurepatches.blob.core.windows.net/opatch/p28186730_139424_Generic.zip?st=2020-11-22T17%3A21%3A00Z&se=2023-02-01T17%3A21%3A00Z&sp=rl&sv=2018-03-28&sr=c&sig=zyRJSbKSxl5R4IJIVxhzT8mMk8jscV%2FWaI20QLn7wQY%3D"
+wlspsu_patch="https://weblogiconazurepatches.blob.core.windows.net/ps3/p31961038_122130_Generic.zip?st=2020-11-22T22%3A12%3A00Z&se=2023-02-01T22%3A12%3A00Z&sp=rl&sv=2018-03-28&sr=c&sig=fYvRjfnhkuHuH5NHxpXHwgAjKEFO%2F7R2Xg9vmtnpojM%3D"
+overlay_patch="https://weblogiconazurepatches.blob.core.windows.net/ps3/p32097173_12213201001_Generic.zip?st=2020-11-22T22%3A12%3A00Z&se=2023-02-01T22%3A12%3A00Z&sp=rl&sv=2018-03-28&sr=c&sig=fYvRjfnhkuHuH5NHxpXHwgAjKEFO%2F7R2Xg9vmtnpojM%3D"
 
 downloadpatch $opatch_patch  "opatch.zip"
 
 unzippatch $PATCH_DIR/opatch.zip
 
+echo "Patching OPatch ...."$PATCH_DIR/$patcharchive
+
 runuser -l oracle -c "$JAVA_HOME/bin/java -jar  $PATCH_DIR/$patcharchive/opatch_generic.jar -silent oracle_home=/u01/app/wls/install/oracle/middleware/oracle_home"
 
-#java -jar $PATCH_DIR/$patcharchive/opatch_generic.jar -silent oracle_home=/u01/app/wls/install/oracle/middleware/oracle_home
-#sudo yum upgrade -y --disablerepo=ol7_latest --enablerepo=ol7_u3_base
+downloadpatch $wlspsu_patch  "wlspsu.zip"
 
-#sudo reboot
+unzippatch $PATCH_DIR/wlspsu.zip
 
+echo "Patching WLS ...."$PATCH_DIR/$patcharchive
+
+runuser -l oracle -c ". /u01/app/wls/install/oracle/middleware/oracle_home/wlserver/server/bin/setWLSEnv.sh; /u01/app/wls/install/oracle/middleware/oracle_home/OPatch/opatch apply -silent $PATCH_DIR/$patcharchive"
+
+downloadpatch $overlay_patch  "wlsoverlay.zip"
+
+echo "Patching WLS ...."$PATCH_DIR/$patcharchive
+
+unzippatch $PATCH_DIR/wlsoverlay.zip
+
+runuser -l oracle -c ". /u01/app/wls/install/oracle/middleware/oracle_home/wlserver/server/bin/setWLSEnv.sh; /u01/app/wls/install/oracle/middleware/oracle_home/OPatch/opatch apply -silent $PATCH_DIR/$patcharchive"
