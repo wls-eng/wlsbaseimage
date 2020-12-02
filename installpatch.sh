@@ -274,15 +274,13 @@ function downloadpatch()
 {
     echo "Download patch from storage account"
     curl $1 --output $PATCH_DIR/$2
-    sudo chown -R $username:$groupname $PATCH_DIR
-
+    
 }
 
 function unzippatch()
 {
     echo "Unzip patch "$1
     patcharchive=$(unzip $1 -d /u01/app/patch| grep -m1 'creating:' | cut -d'/' -f5)
-    sudo chown -R $username:$groupname $PATCH_DIR
 
 }
 
@@ -459,6 +457,8 @@ downloadpatch $wlspsu_patch  "wlspsu.zip"
 unzippatch $PATCH_DIR/wlspsu.zip
 
 echo "Patching WLS ...."$PATCH_DIR/$patcharchive
+
+sudo chown -R $username:$groupname $PATCH_DIR/$patcharchive
 
 runuser -l oracle -c ". /u01/app/wls/install/oracle/middleware/oracle_home/wlserver/server/bin/setWLSEnv.sh; /u01/app/wls/install/oracle/middleware/oracle_home/OPatch/opatch apply -silent $PATCH_DIR/$patcharchive"
 
