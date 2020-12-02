@@ -446,7 +446,9 @@ downloadpatch $opatch_patch  "opatch.zip"
 
 unzippatch $PATCH_DIR/opatch.zip
 
-java -jar $PATCH_DIR/$patcharchive/opatch_generic.jar -silent oracle_home=/u01/app/wls/install/oracle/middleware/oracle_home
+runuser -l oracle -c "$JAVA_HOME/bin/java -jar  $PATCH_DIR/$patcharchive/opatch_generic.jar -silent oracle_home=/u01/app/wls/install/oracle/middleware/oracle_home"
+
+#java -jar $PATCH_DIR/$patcharchive/opatch_generic.jar -silent oracle_home=/u01/app/wls/install/oracle/middleware/oracle_home
 #sudo yum upgrade -y --disablerepo=ol7_latest --enablerepo=ol7_u3_base
 
 #sudo reboot
