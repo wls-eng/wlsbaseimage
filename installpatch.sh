@@ -458,7 +458,7 @@ unzippatch $PATCH_DIR/wlspsu.zip
 
 echo "Patching WLS ...."$PATCH_DIR/$patcharchive
 
-#runuser -l oracle -c ". /u01/app/wls/install/oracle/middleware/oracle_home/wlserver/server/bin/setWLSEnv.sh; /u01/app/wls/install/oracle/middleware/oracle_home/OPatch/opatch apply -silent $PATCH_DIR/$patcharchive"
+runuser -l oracle -c ". /u01/app/wls/install/oracle/middleware/oracle_home/wlserver/server/bin/setWLSEnv.sh; /u01/app/wls/install/oracle/middleware/oracle_home/OPatch/opatch apply -silent $PATCH_DIR/$patcharchive"
 
 #downloadpatch $overlay_patch  "wlsoverlay.zip"
 
