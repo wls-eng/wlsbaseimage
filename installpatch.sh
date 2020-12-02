@@ -277,6 +277,15 @@ function downloadpatch()
 
 }
 
+function unzippatch()
+{
+    echo "Unzip patch "$1
+    patcharchive=$(unzip $1 -d /u01/app/patch| grep -m1 'creating:' | cut -d'/' -f5)
+
+}
+
+
+
 
 #main script starts here
 
@@ -296,6 +305,7 @@ export shiphomeurl="$4"
 export jdkurl="$5"
 export wlsversion="$6"
 export jdkversion="$7"
+patcharchive=""
 
 if [ -z "$acceptOTNLicenseAgreement" ];
 then
@@ -433,6 +443,10 @@ echo "Weblogic Server Installation Completed succesfully."
 opatch_patch="https://weblogiconazurepatches.blob.core.windows.net/opatch/p28186730_139424_Generic.zip?st=2020-11-22T17%3A21%3A00Z&se=2023-02-01T17%3A21%3A00Z&sp=rl&sv=2018-03-28&sr=c&sig=zyRJSbKSxl5R4IJIVxhzT8mMk8jscV%2FWaI20QLn7wQY%3D"
 
 downloadpatch $opatch_patch  "opatch.zip"
+
+unzippatch $PATCH_DIR/opatch.zip
+
+java -jar $PATCH_DIR/$patcharchive/opatch_generic.jar -silent oracle_home=/u01/app/wls/install/oracle/middleware/oracle_home
 #sudo yum upgrade -y --disablerepo=ol7_latest --enablerepo=ol7_u3_base
 
 #sudo reboot
