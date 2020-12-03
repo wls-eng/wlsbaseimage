@@ -273,14 +273,16 @@ function installWLS()
 function downloadpatch()
 {
     echo "Download patch from storage account"
-    curl $1 --output $PATCH_DIR/$2
+    runuser -l oracle -c "curl $1 --output $PATCH_DIR/$2"
+    #curl $1 --output $PATCH_DIR/$2
     
 }
 
 function unzippatch()
 {
     echo "Unzip patch "$1
-    patcharchive=$(unzip $1 -d /u01/app/patch| grep -m1 'creating:' | cut -d'/' -f5)
+    runuser -l oracle -c "patcharchive=$(unzip $1 -d /u01/app/patch| grep -m1 'creating:' | cut -d'/' -f5)"
+    #patcharchive=$(unzip $1 -d /u01/app/patch| grep -m1 'creating:' | cut -d'/' -f5)
 
 }
 
@@ -450,19 +452,19 @@ unzippatch $PATCH_DIR/opatch.zip
 
 echo "Patching OPatch ...."$PATCH_DIR/$patcharchive
 
-sudo chown -R $username:$groupname $PATCH_DIR/$patcharchive
+#sudo chown -R $username:$groupname $PATCH_DIR/$patcharchive
 
-runuser -l oracle -c "$JAVA_HOME/bin/java -jar  $PATCH_DIR/$patcharchive/opatch_generic.jar -silent oracle_home=/u01/app/wls/install/oracle/middleware/oracle_home"
+#runuser -l oracle -c "$JAVA_HOME/bin/java -jar  $PATCH_DIR/$patcharchive/opatch_generic.jar -silent oracle_home=/u01/app/wls/install/oracle/middleware/oracle_home"
 
-downloadpatch $wlspsu_patch  "wlspsu.zip"
+#downloadpatch $wlspsu_patch  "wlspsu.zip"
 
-unzippatch $PATCH_DIR/wlspsu.zip
+#unzippatch $PATCH_DIR/wlspsu.zip
 
-echo "Patching WLS ...."$PATCH_DIR/$patcharchive
+#echo "Patching WLS ...."$PATCH_DIR/$patcharchive
 
-sudo chown -R $username:$groupname $PATCH_DIR/$patcharchive
+#sudo chown -R $username:$groupname $PATCH_DIR/$patcharchive
 
-runuser -l oracle -c ". /u01/app/wls/install/oracle/middleware/oracle_home/wlserver/server/bin/setWLSEnv.sh; /u01/app/wls/install/oracle/middleware/oracle_home/OPatch/opatch apply -silent $PATCH_DIR/$patcharchive"
+#runuser -l oracle -c ". /u01/app/wls/install/oracle/middleware/oracle_home/wlserver/server/bin/setWLSEnv.sh; /u01/app/wls/install/oracle/middleware/oracle_home/OPatch/opatch apply -silent $PATCH_DIR/$patcharchive"
 
 #downloadpatch $overlay_patch  "wlsoverlay.zip"
 
