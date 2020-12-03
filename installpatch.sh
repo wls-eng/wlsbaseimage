@@ -463,7 +463,8 @@ echo "Patching WLS ...."$PATCH_DIR/$patcharchive
 
 #sudo chown -R $username:$groupname $PATCH_DIR/$patcharchive
 
-runuser -l oracle -c ". /u01/app/wls/install/oracle/middleware/oracle_home/wlserver/server/bin/setWLSEnv.sh; /u01/app/wls/install/oracle/middleware/oracle_home/OPatch/opatch apply -silent $PATCH_DIR/$patcharchive"
+#. /u01/app/wls/install/oracle/middleware/oracle_home/wlserver/server/bin/setWLSEnv.sh; cd $PATCH_DIR/$patcharchive; /u01/app/wls/install/oracle/middleware/oracle_home/OPatch/opatch napply -silent
+runuser -l oracle -c ". /u01/app/wls/install/oracle/middleware/oracle_home/wlserver/server/bin/setWLSEnv.sh; cd $PATCH_DIR/$patcharchive; /u01/app/wls/install/oracle/middleware/oracle_home/OPatch/opatch apply -silent"
 
 #downloadpatch $overlay_patch  "wlsoverlay.zip"
 
