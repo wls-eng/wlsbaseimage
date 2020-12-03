@@ -453,7 +453,7 @@ echo "Patching OPatch ...."$PATCH_DIR/$patcharchive
 
 #sudo chown -R $username:$groupname $PATCH_DIR/$patcharchive
 
-#runuser -l oracle -c "$JAVA_HOME/bin/java -jar  $PATCH_DIR/$patcharchive/opatch_generic.jar -silent oracle_home=/u01/app/wls/install/oracle/middleware/oracle_home"
+runuser -l oracle -c "$JAVA_HOME/bin/java -jar  $PATCH_DIR/$patcharchive/opatch_generic.jar -silent oracle_home=/u01/app/wls/install/oracle/middleware/oracle_home"
 
 #downloadpatch $wlspsu_patch  "wlspsu.zip"
 
