@@ -2,6 +2,10 @@
    "$schema":"https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
    "contentVersion":"1.0.0.0",
    "parameters":{
+      "baseTime": {
+         "type": "string",
+         "defaultValue": "[utcNow('u')]"
+      },
       "adminUsername":{
          "type":"string",
          "metadata":{
@@ -104,8 +108,8 @@
             "defaultValue": {
                 "signedServices": "b",
                 "signedPermission": "rl",
-                "signedStart" : "2020-04-06T00:00:01Z",
-                "signedExpiry": "2020-08-06T00:00:01Z",
+                "signedStart" : "[dateTimeAdd(parameters('baseTime'), '-P2D')]",
+                "signedExpiry": "[dateTimeAdd(parameters('baseTime'), 'P120D')]",
                 "signedResourceTypes": "o"
             }
       },
@@ -124,7 +128,7 @@
       }
    },
    "variables":{
-      "storageAccountName":"[concat(uniquestring(resourceGroup().id), 'olvm')]",
+      "storageAccountName":"[substring(concat(replace(resourceGroup().name,'-',''),uniquestring(resourceGroup().id),'xxxxxxxxxx'),0,23)]",
       "storageContainerUri":"[concat(concat('https://', variables('storageAccountName'), '.blob.core.windows.net/'), 'vhds/')]",
       "imagePublisher":"Oracle",
       "imageOffer":"Oracle-Linux",
