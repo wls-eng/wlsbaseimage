@@ -3,7 +3,7 @@
 #Function to output message to StdErr
 function echo_stderr ()
 {
-    echo "$@" >&6
+    echo "$@" >&2
 }
 
 #Function to display usage message
