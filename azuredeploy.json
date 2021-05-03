@@ -88,7 +88,6 @@
          "defaultValue":"7.6",
          "allowedValues":[
             "7.6",
-            "7.5",
             "7.4",
             "7.3"
          ],
@@ -130,8 +129,8 @@
    "variables":{
       "storageAccountName":"[substring(concat(replace(resourceGroup().name,'-',''),uniquestring(resourceGroup().id),'xxxxxxxxxx'),0,23)]",
       "storageContainerUri":"[concat(concat('https://', variables('storageAccountName'), '.blob.core.windows.net/'), 'vhds/')]",
-      "imagePublisher":"Oracle",
-      "imageOffer":"Oracle-Linux",
+      "imagePublisher":"RedHat",
+      "imageOffer":"RHEL",
       "nicName":"olvmNIC",
       "addressPrefix":"10.0.0.0/16",
       "subnetName":"Subnet",
