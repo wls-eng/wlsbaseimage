@@ -346,6 +346,8 @@ sudo rm -rf $WLS_PATH/*
 
 cleanup
 
+sudo mkdir -p ${user_home_dir}
+sudo chown -R $username:$groupname ${user_home_dir}
 
 #download jdk from OTN
 echo "Downloading jdk from OTN..."
