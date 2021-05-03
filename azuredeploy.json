@@ -6,6 +6,26 @@
          "type": "string",
          "defaultValue": "[utcNow('u')]"
       },
+      "_artifactsLocation": {
+          "type": "string",
+          "metadata": {
+              "description": "The base URI where artifacts required by this template are located. When the template is deployed using the accompanying scripts, a private location in the subscription will be used and this value will be automatically generated."
+          }
+      },
+      "_artifactsLocationClusterTemplate": {
+          "defaultValue": "[if(contains(parameters('_artifactsLocation'), 'githubusercontent'), parameters('_artifactsLocation'), deployment().properties.templateLink.uri)]",
+          "type": "string",
+          "metadata": {
+              "description": "If we are deploying from the command line, use the passed in _artifactsLocation, otherwise use the default."
+          }
+      },
+      "_artifactsLocationSasToken": {
+          "defaultValue": "",
+          "type": "securestring",
+          "metadata": {
+              "description": "The sasToken required to access _artifactsLocation.  When the template is deployed using the accompanying scripts, a sasToken will be automatically generated. Use the defaultValue if the staging location is not secured."
+          }
+      },      
       "adminUsername":{
          "type":"string",
          "metadata":{
@@ -143,6 +163,7 @@
       "vmName":"BaseImageVM",
       "vmSize":"[parameters('vmSizeSelect')]",
       "virtualNetworkName":"olvmVNET",
+      "name_scriptFile": "genericinstall.sh",
       "linuxConfiguration":{
          "disablePasswordAuthentication":true,
          "ssh":{
@@ -326,7 +347,7 @@
             "autoUpgradeMinorVersion":true,
             "settings":{
                "fileUris":[
-                  "https://raw.githubusercontent.com/jacobt123/wlsbaseimage/master/genericinstall.sh"
+                  "[uri(parameters('_artifactsLocationClusterTemplate'), concat(variables('name_scriptFile'),variables('name_scriptFile'), parameters('_artifactsLocationSasToken')))]"
                ],
                "commandToExecute":"[concat('sh genericinstall.sh',' ',parameters('acceptOTNLicenseAgreement'),' ',parameters('otnAccountUsername'),' ',parameters('otnAccountPassword'),' ',parameters('shiphomeurl'),' ',parameters('jdkurl'),' ',parameters('wlsversion'),' ',parameters('jdkversion'))]"
             }
