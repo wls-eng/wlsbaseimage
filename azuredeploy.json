@@ -347,7 +347,7 @@
             "autoUpgradeMinorVersion":true,
             "settings":{
                "fileUris":[
-                  "[uri(parameters('_artifactsLocationClusterTemplate'), concat(variables('name_scriptFile'),variables('name_scriptFile'), parameters('_artifactsLocationSasToken')))]"
+                  "[uri(parameters('_artifactsLocationClusterTemplate'), variables('name_scriptFile'), parameters('_artifactsLocationSasToken'))]"
                ],
                "commandToExecute":"[concat('sh genericinstall.sh',' ',parameters('acceptOTNLicenseAgreement'),' ',parameters('otnAccountUsername'),' ',parameters('otnAccountPassword'),' ',parameters('shiphomeurl'),' ',parameters('jdkurl'),' ',parameters('wlsversion'),' ',parameters('jdkversion'))]"
             }
