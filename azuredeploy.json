@@ -131,13 +131,13 @@
       "storageContainerUri":"[concat(concat('https://', variables('storageAccountName'), '.blob.core.windows.net/'), 'vhds/')]",
       "imagePublisher":"RedHat",
       "imageOffer":"RHEL",
-      "nicName":"olvmNIC",
+      "nicName":"[concat(variables('subnetName'), 'NIC')]",
       "addressPrefix":"10.0.0.0/16",
       "subnetName":"Subnet",
       "networkSecurityGroupName":"[concat(variables('subnetName'), '-nsg')]",
       "subnetPrefix":"10.0.0.0/24",
       "storageAccountType":"Standard_LRS",
-      "publicIPAddressName":"olvmPublicIP",
+      "publicIPAddressName":"[concat(variables('subnetName'),'PublicIP')]",
       "publicIPAddressType":"Dynamic",
       "vmName":"BaseImageVM",
       "vmSize":"[parameters('vmSizeSelect')]",
@@ -293,19 +293,7 @@
                   "vhd":{
                      "uri":"[concat(variables('storageContainerUri'), parameters('vmName'), '-OS.vhd')]"
                   }
-               },
-               "dataDisks":[
-                  {
-                     "lun":0,
-                     "name":"[concat(parameters('vmName'),'-DD')]",
-                     "createOption":"Empty",
-                     "vhd":{
-                        "uri":"[concat(variables('storageContainerUri'), parameters('vmName'), '-DD.vhd')]"
-                     },
-                     "caching":"None",
-                     "diskSizeGB":900
-                  }
-               ]
+               }
             },
             "networkProfile":{
                "networkInterfaces":[
