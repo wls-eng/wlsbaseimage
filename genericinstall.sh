@@ -325,6 +325,13 @@ USER_GROUP=${groupname}
 sudo groupadd $groupname
 sudo useradd -d ${user_home_dir} -m -g $groupname $username
 
+if [ -d ${user_home_dir} ]
+then
+	echo "User home directory is created ${user_home_dir}"
+else
+	sudo mkdir -p ${user_home_dir}
+	sudo chown -R $username:$groupname ${user_home_dir}
+fi	
 
 JDK_PATH="/u01/app/jdk"
 WLS_PATH="/u01/app/wls"
