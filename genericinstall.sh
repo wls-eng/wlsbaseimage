@@ -323,9 +323,7 @@ username="oracle"
 user_home_dir="/u01/oracle"
 USER_GROUP=${groupname}
 sudo groupadd $groupname
-sudo useradd -d ${user_home_dir} -g $groupname $username
-
-
+sudo useradd -d ${user_home_dir} -m -g $groupname $username
 
 
 JDK_PATH="/u01/app/jdk"
