@@ -30,6 +30,16 @@ function cleanup()
     echo "Cleanup completed."
 }
 
+# RedHat root file system has of size 2GB which is less for WLS setup
+# This function increases the disk size around 30 GB
+function resizeDisk()
+{
+   sudo growpart /dev/sda 4 --fudge 2048
+   sudo lvextend -An -L+30G --resizefs /dev/mapper/rootvg-rootlv
+   sudo pvresize /dev/sda4
+   sudo df -h /
+}
+
 #download 3rd Party JDBC Drivers
 function downloadJDBCDrivers()
 {
@@ -388,7 +398,7 @@ else
 fi
 
 echo "Installing zip unzip wget vnc-server rng-tools cifs-utils"
-sudo yum install -y zip unzip wget vnc-server rng-tools cifs-utils
+sudo yum install -y zip unzip wget vnc-server rng-tools cifs-utils cloud-utils-growpart gdisk
 
 #Setting up rngd utils
 sudo systemctl enable rngd 
