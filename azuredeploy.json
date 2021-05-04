@@ -137,7 +137,7 @@
          "defaultValue":"Standard_D2as_v4",
          "type": "string",
          "metadata":{
-            "description":"Select appropriate VM Size as per requirement (Standard_A1, Standard_A2, Standard_A3, Standard_A4,Standard_B2s)"
+            "description":"Select appropriate VM Size as per requirement"
          }
       }
    },
@@ -146,17 +146,17 @@
       "storageContainerUri":"[concat(concat('https://', variables('storageAccountName'), '.blob.core.windows.net/'), 'vhds/')]",
       "imagePublisher":"RedHat",
       "imageOffer":"RHEL",
-      "nicName":"[concat(variables('subnetName'), 'NIC')]",
+      "nicName":"[concat(parameters('dnsLabelPrefix'), 'NIC')]",
       "addressPrefix":"10.0.0.0/16",
       "subnetName":"Subnet",
-      "networkSecurityGroupName":"[concat(variables('subnetName'), '-nsg')]",
+      "networkSecurityGroupName":"[concat(parameters('dnsLabelPrefix'), '-nsg')]",
       "subnetPrefix":"10.0.0.0/24",
       "storageAccountType":"Standard_LRS",
-      "publicIPAddressName":"[concat(variables('subnetName'),'PublicIP')]",
+      "publicIPAddressName":"[concat(parameters('dnsLabelPrefix'),'PublicIP')]",
       "publicIPAddressType":"Dynamic",
       "vmName":"BaseImageVM",
       "vmSize":"[parameters('vmSizeSelect')]",
-      "virtualNetworkName":"olvmVNET",
+      "virtualNetworkName":"[concat(parameters('dnsLabelPrefix'),'olvmVNET')]",
       "name_scriptFile": "genericinstall.sh",
       "linuxConfiguration":{
          "disablePasswordAuthentication":true,
