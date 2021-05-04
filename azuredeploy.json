@@ -156,7 +156,7 @@
       "publicIPAddressType":"Dynamic",
       "vmName":"BaseImageVM",
       "vmSize":"[parameters('vmSizeSelect')]",
-      "virtualNetworkName":"[concat(parameters('dnsLabelPrefix'),'olvmVNET')]",
+      "virtualNetworkName":"[concat(parameters('dnsLabelPrefix'),'VNET')]",
       "name_scriptFile": "genericinstall.sh",
       "linuxConfiguration":{
          "disablePasswordAuthentication":true,
