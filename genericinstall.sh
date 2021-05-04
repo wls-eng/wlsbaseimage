@@ -34,9 +34,13 @@ function cleanup()
 # This function increases the disk size around 30 GB
 function resizeDisk()
 {
+   echo "Resizing the /dev/mapper/rootvg-rootlv file system"
+   echo "Initial /dev/mapper/rootvg-rootlv size"
+   sudo df -h /dev/mapper/rootvg-rootlv
    sudo growpart /dev/sda 4 --fudge 2048
    sudo lvextend -An -L+30G --resizefs /dev/mapper/rootvg-rootlv
    sudo pvresize /dev/sda4
+   echo "After resizing /dev/mapper/rootvg-rootlv size"
    sudo df -h /
 }
 
@@ -399,6 +403,9 @@ fi
 
 echo "Installing zip unzip wget vnc-server rng-tools cifs-utils"
 sudo yum install -y zip unzip wget vnc-server rng-tools cifs-utils cloud-utils-growpart gdisk
+
+# Reszing the file system size
+resizeDisk
 
 #Setting up rngd utils
 sudo systemctl enable rngd 
