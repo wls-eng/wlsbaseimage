@@ -402,7 +402,7 @@ else
 fi
 
 echo "Installing zip unzip wget vnc-server rng-tools cifs-utils"
-sudo yum install -y zip unzip wget vnc-server rng-tools cifs-utils cloud-utils-growpart gdisk
+sudo yum install -y zip unzip wget vnc-server rng-tools cifs-utils cloud-utils-growpart gdisk psmisc
 
 # Reszing the file system size
 resizeDisk
