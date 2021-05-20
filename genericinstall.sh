@@ -44,6 +44,18 @@ function resizeDisk()
    sudo df -h /
 }
 
+#This function is to create swapfile required for WebLogic installation
+function createSwap()
+{
+   echo "Creating swapfile at /root/swapfile"
+   sudo dd if=/dev/zero of=/root/swapfile bs=2M count=1024
+   sudo mkswap /root/swapfile
+   sudo swapon /root/swapfile
+   sudo chmod 0600 /root/swapfile
+   echo "Make a entry in /etc/fstab for swapfile"
+   echo "/root/swapfile swap swap defaults 0 0" >> /etc/fstab 
+}
+
 #download 3rd Party JDBC Drivers
 function downloadJDBCDrivers()
 {
@@ -406,6 +418,9 @@ sudo yum install -y zip unzip wget vnc-server rng-tools cifs-utils cloud-utils-g
 
 # Reszing the file system size
 resizeDisk
+
+# Create swap file, which is required for WLS installation
+createSwap
 
 #Setting up rngd utils
 sudo systemctl enable rngd 
