@@ -9,7 +9,7 @@ function echo_stderr ()
 #Function to display usage message
 function usage()
 {
-  echo_stderr "./installWeblogic.sh <acceptOTNLicenseAgreement> <otnusername> <otnpassword> <shiphomeurl> <jdkurl> <wlsversion> <jdkversion>"
+  echo_stderr "./installWeblogic.sh <acceptOTNLicenseAgreement> <otnusername> <otnpassword> <shiphomeurl> <jdkurl> <wlsversion> <jdkversion> <linux version>"
 }
 
 
@@ -315,6 +315,7 @@ export shiphomeurl="$4"
 export jdkurl="$5"
 export wlsversion="$6"
 export jdkversion="$7"
+export linuxversion="$8"
 
 if [ -z "$acceptOTNLicenseAgreement" ];
 then
@@ -332,6 +333,12 @@ if [[ -z "$otnusername" || -z "$otnpassword" ]]
 then
         echo_stderr "otnusername or otnpassword is required. "
         exit 1
+fi
+
+if [[ -z "$linuxversion" ]]
+then
+	echo_stderr "Linux version is required"
+	exit 1
 fi
 
 export WLS_VER=$wlsversion
@@ -412,6 +419,9 @@ else
     echo_stderr "Failed to set JAVA_HOME. Please check logs and re-run the setup"
     exit 1
 fi
+
+echo "Locking version to linux version : $linuxversion"
+
 
 echo "Installing zip unzip wget vnc-server rng-tools cifs-utils"
 sudo yum install -y zip unzip wget vnc-server rng-tools cifs-utils cloud-utils-growpart gdisk psmisc
