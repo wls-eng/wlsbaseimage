@@ -343,7 +343,7 @@
                "fileUris":[
                   "[uri(parameters('_artifactsLocationRedHatTemplate'), concat(variables('name_scriptFile'), parameters('_artifactsLocationSasToken')))]"
                ],
-               "commandToExecute":"[concat('sh genericinstall.sh',' ',parameters('acceptOTNLicenseAgreement'),' ',parameters('otnAccountUsername'),' ',parameters('otnAccountPassword'),' ',parameters('shiphomeurl'),' ',parameters('jdkurl'),' ',parameters('wlsversion'),' ',parameters('jdkversion'))]"
+               "commandToExecute":"[concat('sh genericinstall.sh',' ',parameters('acceptOTNLicenseAgreement'),' ',parameters('otnAccountUsername'),' ',parameters('otnAccountPassword'),' ',parameters('shiphomeurl'),' ',parameters('jdkurl'),' ',parameters('wlsversion'),' ',parameters('jdkversion'),' ',parameters('linuxOSVersion'))]"
             }
          }
       }
