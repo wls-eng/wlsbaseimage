@@ -422,7 +422,7 @@ fi
 
 echo "Locking version to linux version : $linuxversion"
 
-if [ "$linuxversion" == "7.4" ] || [ "$linuxversion" == "7.3" ]
+if [ "$linuxversion" == "7.3" ]
 then
     sudo yum clean all
     sudo yum makecache
