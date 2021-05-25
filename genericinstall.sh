@@ -424,13 +424,15 @@ echo "Locking version to linux version : $linuxversion"
 
 if [ "$ver" == "7.4" ] || [ "$ver" == "7.3" ]
 then
+    sudo yum clean all
+    sudo yum makecache
     echo "Enable repos : --disablerepo='*' --enablerepo='*microsoft*'"
     sudo yum update -y --disablerepo='*' --enablerepo='*microsoft*'
-else
-    echo "Disable non-EUS repos : --disablerepo='*' remove 'rhui-azure-rhel7'"
-    sudo yum --disablerepo='*' remove 'rhui-azure-rhel7'
 fi
 
+
+echo "Disable non-EUS repos : --disablerepo='*' remove 'rhui-azure-rhel7'"
+sudo yum --disablerepo='*' remove 'rhui-azure-rhel7'
 echo "Add EUS repos:https://rhelimage.blob.core.windows.net/repositories/rhui-microsoft-azure-rhel7-eus.config" 
 sudo yum --config='https://rhelimage.blob.core.windows.net/repositories/rhui-microsoft-azure-rhel7-eus.config' install 'rhui-azure-rhel7-eus'
 echo "Lock the releasever variable "
