@@ -448,7 +448,7 @@ sudo yum install -y zip unzip wget vnc-server rng-tools cifs-utils cloud-utils-g
 resizeDisk
 
 # Create swap file, which is required for WLS installation
-createSwap
+#createSwap
 
 #Setting up rngd utils
 sudo systemctl enable rngd 
