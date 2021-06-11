@@ -431,15 +431,15 @@ then
 fi
 
 
-echo "Disable non-EUS repos : --disablerepo='*' remove 'rhui-azure-rhel7'"
-sudo yum -y --disablerepo='*' remove 'rhui-azure-rhel7'
-echo "Add EUS repos:https://rhelimage.blob.core.windows.net/repositories/rhui-microsoft-azure-rhel7-eus.config" 
-sudo yum -y --config='https://rhelimage.blob.core.windows.net/repositories/rhui-microsoft-azure-rhel7-eus.config' install 'rhui-azure-rhel7-eus'
-echo "Lock the releasever variable "
-sudo echo $(. /etc/os-release && echo $VERSION_ID) > /etc/yum/vars/releasever
-sudo cat /etc/yum/vars/releasever
-echo "Update RHEL VM"
-sudo yum -y update
+#echo "Disable non-EUS repos : --disablerepo='*' remove 'rhui-azure-rhel7'"
+#sudo yum -y --disablerepo='*' remove 'rhui-azure-rhel7'
+#echo "Add EUS repos:https://rhelimage.blob.core.windows.net/repositories/rhui-microsoft-azure-rhel7-eus.config" 
+#sudo yum -y --config='https://rhelimage.blob.core.windows.net/repositories/rhui-microsoft-azure-rhel7-eus.config' install 'rhui-azure-rhel7-eus'
+#echo "Lock the releasever variable "
+#sudo echo $(. /etc/os-release && echo $VERSION_ID) > /etc/yum/vars/releasever
+#sudo cat /etc/yum/vars/releasever
+#echo "Update RHEL VM"
+#sudo yum -y update
 
 echo "Installing zip unzip wget vnc-server rng-tools cifs-utils"
 sudo yum install -y zip unzip wget vnc-server rng-tools cifs-utils cloud-utils-growpart gdisk psmisc
